@@ -23,8 +23,16 @@ const products = [{
  */
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const { brand } = req.cookies;
+  const { productid } = req.query;
 
+  
+  if (productid) {
+    return res.json({
+      product: products.find(product => product.id === productid) || {}
+    })
+  }
+  const brandList =  products.filter((product) => product.brand === brand)
   res.json({
-    products: products.filter((product) => product.brand === brand)
+    products: brandList
   })
 }
